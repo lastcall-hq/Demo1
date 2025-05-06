@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fleet Dispatch Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .container {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+        .form-row .form-group {
+            flex: 1;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            display: block;
+            margin: 20px auto 0;
+            width: 200px;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f0f8ff;
+            border-radius: 4px;
+            border-left: 4px solid #3498db;
+            display: none;
+        }
+        .success {
+            background-color: #e8f5e9;
+            border-left: 4px solid #4caf50;
+        }
+        .error {
+            background-color: #ffebee;
+            border-left: 4px solid #f44336;
+        }
+        pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            background-color: #f5f5f5;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #f1f1f1;
+            border: 1px solid #ddd;
+            border-bottom: none;
+            border-radius: 5px 5px 0 0;
+            margin-right: 5px;
+        }
+        .tab.active {
+            background-color: white;
+            border-bottom: 1px solid white;
+            margin-bottom: -1px;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Last Call - Fleet Dispatch System</h1>
+        
+        <div class="tabs">
+            <div class="tab active" data-tab="ride-form">New Ride</div>
+            <div class="tab" data-tab="bar-form">Add Bar</div>
+            <div class="tab" data-tab="staff-form">Add Staff</div>
+            <div class="tab" data-tab="driver-form">Add Driver</div>
+        </div>
+        
+        <!-- Ride Form -->
+        <div class="tab-content active" id="ride-form">
+            <h2>Create New Ride</h2>
+            <form id="rideForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="bar_id">Bar</label>
+                        <select id="bar_id" required>
+                            <option value="">Select Bar</option>
+                            <option value="bar1">CoolSpot (bar1)</option>
+                            <!-- More bars would be populated dynamically -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="staff_id">Staff Member</label>
+                        <select id="staff_id" required>
+                            <option value="">Select Staff</option>
+                            <option value="staff1">Jenny Lee - Security (staff1)</option>
+                            <!-- More staff would be populated dynamically -->
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="pickup_location">Pickup Location</label>
+                    <input type="text" id="pickup_location" required placeholder="Enter full street address">
+                </div>
+                
+                <div class="form-group">
+                    <label for="dropoff_location">Dropoff Location</label>
+                    <input type="text" id="dropoff_location" required placeholder="Enter full street address">
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="driver_id">Assign Driver (Optional)</label>
+                        <select id="driver_id">
+                            <option value="">Unassigned</option>
+                            <option value="drv1">Marcus D - Camry (drv1)</option>
+                            <!-- More drivers would be populated dynamically -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="payment_status">Payment Status</label>
+                        <select id="payment_status" required>
+                            <option value="Unpaid">Unpaid</option>
+                            <option value="Paid">Paid</option>
+                            <option value="Comp">Comp</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <button type="submit">Create Ride</button>
+            </form>
+        </div>
+        
+        <!-- Bar Form -->
+        <div class="tab-content" id="bar-form">
+            <h2>Add New Bar</h2>
+            <form id="barForm">
+                <div class="form-group">
+                    <label for="bar_name">Bar Name</label>
+                    <input type="text" id="bar_name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="bar_address">Address</label>
+                    <input type="text" id="bar_address" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="bar_phone">Phone</label>
+                    <input type="tel" id="bar_phone" required pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="555-123-4567">
+                </div>
+                
+                <button type="submit">Add Bar</button>
+            </form>
+        </div>
+        
+        <!-- Staff Form -->
+        <div class="tab-content" id="staff-form">
+            <h2>Add New Staff Member</h2>
+            <form id="staffForm">
+                <div class="form-group">
+                    <label for="staff_name">Name</label>
+                    <input type="text" id="staff_name" required>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="staff_bar_id">Bar</label>
+                        <select id="staff_bar_id" required>
+                            <option value="">Select Bar</option>
+                            <option value="bar1">CoolSpot (bar1)</option>
+                            <!-- More bars would be populated dynamically -->
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="staff_role">Role</label>
+                        <select id="staff_role" required>
+                            <option value="Manager">Manager</option>
+                            <option value="Bartender">Bartender</option>
+                            <option value="Security">Security</option>
+                            <option value="Server">Server</option>
+                            <option value="Host">Host</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="staff_phone">Phone</label>
+                    <input type="tel" id="staff_phone" required pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="555-123-4567">
+                </div>
+                
+                <button type="submit">Add Staff Member</button>
+            </form>
+        </div>
+        
+        <!-- Driver Form -->
+        <div class="tab-content" id="driver-form">
+            <h2>Add New Driver</h2>
+            <form id="driverForm">
+                <div class="form-group">
+                    <label for="driver_name">Name</label>
+                    <input type="text" id="driver_name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="driver_phone">Phone</label>
+                    <input type="tel" id="driver_phone" required pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="555-123-4567">
+                </div>
+                
+                <div class="form-group">
+                    <label for="driver_vehicle">Vehicle</label>
+                    <input type="text" id="driver_vehicle" required placeholder="Make and Model">
+                </div>
+                
+                <button type="submit">Add Driver</button>
+            </form>
+        </div>
+        
+        <!-- Result Display -->
+        <div id="result" class="result">
+            <h3>Generated Data</h3>
+            <p>This is the data that will be sent to your n8n webhook:</p>
+            <pre id="resultData"></pre>
+        </div>
+    </div>
+
+    <script>
+        // Tab switching functionality
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and content
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab
+                tab.classList.add('active');
+                
+                // Show corresponding content
+                const tabId = tab.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+        
+        // Generate unique IDs
+        function generateId(prefix) {
+            return prefix + Math.floor(Math.random() * 10000).toString().padStart(4, '0');
+        }
+        
+        // Current timestamp in the format used by the system
+        function getCurrentTimestamp() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            
+            return `${year}-${month}-${day} ${hours}:${minutes}`;
+        }
+        
+        // Handle ride form submission
+        document.getElementById('rideForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const rideId = generateId('RIDE');
+            const timestamp = getCurrentTimestamp();
+            const barId = document.getElementById('bar_id').value;
+            const staffId = document.getElementById('staff_id').value;
+            const pickupLocation = document.getElementById('pickup_location').value;
+            const dropoffLocation = document.getElementById('dropoff_location').value;
+            const driverId = document.getElementById('driver_id').value;
+            const paymentStatus = document.getElementById('payment_status').value;
+            
+            // Create the data in the format expected by the n8n webhook
+            const data = {
+                timestamp: timestamp,
+                ride_id: rideId,
+                bar_id: barId,
+                staff_id: staffId,
+                pickup_location: pickupLocation,
+                dropoff_location: dropoffLocation,
+                status: "Pending",
+                assigned_driver: driverId || "",
+                payment_status: paymentStatus,
+                action: "create_ride",
+                webhookURL: "https://lastcall-hq.app.n8n.cloud/webhook/ride"
+            };
+            
+            // Format as it would appear in the table
+            const tableRow = `${timestamp} ${rideId} ${barId} ${staffId} ${pickupLocation} ${dropoffLocation} Pending ${driverId || ""} ${paymentStatus}`;
+            
+            // Display the result
+            const resultElement = document.getElementById('result');
+            resultElement.style.display = 'block';
+            resultElement.classList.add('success');
+            
+            document.getElementById('resultData').innerHTML = 
+                `// Table Format:\n${tableRow}\n\n// JSON Payload:\n${JSON.stringify(data, null, 2)}`;
+            
+            // In a real implementation, we would send this data to the webhook
+            // fetch('https://lastcall-hq.app.n8n.cloud/webhook/ride', {
+            //     method: 'POST',
+            //     headers: { 'Content-Type': 'application/json' },
+            //     body: JSON.stringify(data)
+            // });
+        });
+        
+        // Handle bar form submission
+        document.getElementById('barForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const barId = generateId('bar');
+            const name = document.getElementById('bar_name').value;
+            const address = document.getElementById('bar_address').value;
+            const phone = document.getElementById('bar_phone').value;
+            
+            // Create the data in the format expected by the n8n webhook
+            const data = {
+                bar_id: barId,
+                name: name,
+                address: address,
+                phone: phone,
+                action: "create_bar",
+                webhookURL: "https://lastcall-hq.app.n8n.cloud/webhook/bar"
+            };
+            
+            // Format as it would appear in the table
+            const tableRow = `${barId} ${name} ${address} ${phone}`;
+            
+            // Display the result
+            const resultElement = document.getElementById('result');
+            resultElement.style.display = 'block';
+            resultElement.classList.add('success');
+            
+            document.getElementById('resultData').innerHTML = 
+                `// Table Format:\n${tableRow}\n\n// JSON Payload:\n${JSON.stringify(data, null, 2)}`;
+        });
+        
+        // Handle staff form submission
+        document.getElementById('staffForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const staffId = generateId('staff');
+            const name = document.getElementById('staff_name').value;
+            const barId = document.getElementById('staff_bar_id').value;
+            const role = document.getElementById('staff_role').value;
+            const phone = document.getElementById('staff_phone').value;
+            
+            // Create the data in the format expected by the n8n webhook
+            const data = {
+                staff_id: staffId,
+                name: name,
+                bar_id: barId,
+                role: role,
+                phone: phone,
+                action: "create_staff",
+                webhookURL: "https://lastcall-hq.app.n8n.cloud/webhook/staff"
+            };
+            
+            // Format as it would appear in the table
+            const tableRow = `${staffId} ${name} ${barId} ${role} ${phone}`;
+            
+            // Display the result
+            const resultElement = document.getElementById('result');
+            resultElement.style.display = 'block';
+            resultElement.classList.add('success');
+            
+            document.getElementById('resultData').innerHTML = 
+                `// Table Format:\n${tableRow}\n\n// JSON Payload:\n${JSON.stringify(data, null, 2)}`;
+        });
+        
+        // Handle driver form submission
+        document.getElementById('driverForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const driverId = generateId('drv');
+            const name = document.getElementById('driver_name').value;
+            const phone = document.getElementById('driver_phone').value;
+            const vehicle = document.getElementById('driver_vehicle').value;
+            const timestamp = getCurrentTimestamp();
+            
+            // Create the data in the format expected by the n8n webhook
+            const data = {
+                driver_id: driverId,
+                name: name,
+                phone: phone,
+                vehicle: vehicle,
+                status: "Available",
+                last_checkin: timestamp,
+                action: "create_driver",
+                webhookURL: "https://lastcall-hq.app.n8n.cloud/webhook/driver"
+            };
+            
+            // Format as it would appear in the table
+            const tableRow = `${driverId} ${name} ${phone} ${vehicle} Available ${timestamp}`;
+            
+            // Display the result
+            const resultElement = document.getElementById('result');
+            resultElement.style.display = 'block';
+            resultElement.classList.add('success');
+            
+            document.getElementById('resultData').innerHTML = 
+                `// Table Format:\n${tableRow}\n\n// JSON Payload:\n${JSON.stringify(data, null, 2)}`;
+        });
+    </script>
+</body>
+</html>
